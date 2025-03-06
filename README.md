@@ -53,5 +53,5 @@ Dica: Faça um desing de serviço e não de um servidor. Assim irá poder ser ut
   * É um conjunto de AZ's que ficam na Região
 * AZ's:  Availability Zibes São um conjunto de Datacenter.
 * Local zone: Roda serviços computacionais onde nao possúi AZ's. São "minis" datacenter que rodam aplicações.
-
+* Wavelength Zone: Zonas da AWS que rodam em antes 5G
 
