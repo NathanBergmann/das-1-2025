@@ -55,3 +55,47 @@ Dica: Faça um desing de serviço e não de um servidor. Assim irá poder ser ut
 * Local zone: Roda serviços computacionais onde nao possúi AZ's. São "minis" datacenter que rodam aplicações.
 * Wavelength Zone: Zonas da AWS que rodam em antes 5G
 
+#Tipos de Acesso
+* AWS CLI - Cliente - Acesso via interface\cmd
+* AWS SDK - Aplicação - Uma aplicação que utiliza acesso a AWS
+* AWS API - Requisição - Requisição no postman, ou utilizando um software
+
+#RBAC
+* Role Base Access Control - 
+
+#Role
+* Alguém que pode receber a permissão.
+
+# Polices
+* Documento que da a permissão
+* Polices de identidade: 
+	* Polices Gerenciadas: Criadas pela AWS
+	* Polices Não Gerencias: Você cria e você mantem.
+* Police de Recurso:
+	* Entra no recurso(S3, Lambda, etc..) e adiciona uma politica para o recurso. Utilizado para dar permissões mais especificas, apenas para um bucket.
+	* Necessário identificar qual é o usuário, UTILIZANDO O PRINCIPAL
+Por padrão, sempre vão ter:
+* Effect: Explicito se é Allow(Permitido) ou Deny(Negando)
+* Action : Read, Write, Delete, etc..
+	* Condition: Adiciona condições na Police. Ex: NotIPAddress: {192.0.2.0/24} A Regra só irá valer se não for o ip setado. Ou seja, irá bloquear se não for aquele IP.
+* Resource : Permite dar permissão especifica, exemplo: Apenas uma pasta no Bucket, ou toda a Raiz
+* Principal (APENAS PARA POLICES DE RECURSO): Se terá alguma permissão escpecifica.
+
+#Hospedar um site no S3
+1. Criar um bucket.
+2. Subir o HTML
+3. Deixar o publico com 
+.... (Continuar)
+
+#S3
+* Armazenamento é feito em Blocos. (EBS - Elastic bloc Store)
+* Sistema de arquivos blocados suportam edição no meio dos arquivos
+* File Share: Troca de arquivos no servidor, semelhante a unidades de rede compartilhada. (EFS - Elastic file system)
+* Armazenamento de objetos. (S3 - Simple Storage Service )
+	* Tipo de armazenamento acessado pela internet, onde salva o binario do arquivo e os metadados(dados de dados)
+	* Armazenamento de TAG's (Facilitando na pesquisa)
+* Bucket Limite: Não possui limite
+* Objeto Limite: 5TB de arquivo\Objeto.
+* Todo objeto no S3, tem uma URL Global e única.
+* URL: s3-<aws-region>.amazonaws.com/<bucket-name>/<object-key>
+* Não existem "pastas", apenas pré-fixos.
