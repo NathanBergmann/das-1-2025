@@ -55,15 +55,15 @@ Dica: Faça um desing de serviço e não de um servidor. Assim irá poder ser ut
 * Local zone: Roda serviços computacionais onde nao possúi AZ's. São "minis" datacenter que rodam aplicações.
 * Wavelength Zone: Zonas da AWS que rodam em antes 5G
 
-#Tipos de Acesso
+# Tipos de Acesso
 * AWS CLI - Cliente - Acesso via interface\cmd
 * AWS SDK - Aplicação - Uma aplicação que utiliza acesso a AWS
 * AWS API - Requisição - Requisição no postman, ou utilizando um software
 
-#RBAC
+# RBAC
 * Role Base Access Control - 
 
-#Role
+# Role
 * Alguém que pode receber a permissão.
 
 # Polices
@@ -81,13 +81,13 @@ Por padrão, sempre vão ter:
 * Resource : Permite dar permissão especifica, exemplo: Apenas uma pasta no Bucket, ou toda a Raiz
 * Principal (APENAS PARA POLICES DE RECURSO): Se terá alguma permissão escpecifica.
 
-#Hospedar um site no S3
+# Hospedar um site no S3
 1. Criar um bucket.
 2. Subir o HTML
 3. Deixar o publico com 
 .... (Continuar)
 
-#S3
+# S3
 * Armazenamento é feito em Blocos. (EBS - Elastic bloc Store)
 * Sistema de arquivos blocados suportam edição no meio dos arquivos
 * File Share: Troca de arquivos no servidor, semelhante a unidades de rede compartilhada. (EFS - Elastic file system)
