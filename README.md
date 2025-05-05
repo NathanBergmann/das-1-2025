@@ -199,7 +199,31 @@ Placement Strategies
 # Amazon ElastiCache
 
 
------
-Aula (20/03/2025)
------
+# REDES AWS
+* AWS VPC -
+  * Ajusta o tamanho da sua rede;
+  ## Sub-net
+  * É possível criar Sub-nets, onde uma não pode falar com outra, mesmo que esteja na mesma VPC.
+  * Subnets estão dentro de uma AZ.
+  * Sub-net Privada: Os recursos tendo dela, estão disponiveis de dentro para fora e de fora para dentro. 
+  * Sub-net Publica: Possíbilita a Configuração de uma VPC para acesso publico.
+    * Internet Gateway: Ponta de entrada da VPC.
+    * Tabela de Rotas: Em uma tabela de rotas, precisa  ter um regra de saida para o internet gateway. (A regra de saida que torna ele publica)
+    * O serviço que está dentro da rede publica, tem que ter um IP Publico.
+
+* Níveis de Isolamentos:
+  1. Conta da AWS: Um cliente só pode acessar o que está na propria conta. 
+  2. Regiões: O que está dentro de uma região, não pode conversar com outra região. (A não ser que seja configurado para tal.)
+    2.1 Toda a vez que for criada uma rede, a rede será daquela região.
+  3. Toda a VPC é interconectada. Basicamente, se tenho 3 servidor em az's diferentes, a VPC faz com que a velocidade seja igual como se tivesse um cabo de rede conectado.
+  ## Tabela de Rotas:
+  * É um serviço que diz para o dispositivo para onde ele irá enviar o pacote.
+  * Toda a VPC tem uma tabela de rotas padrão, onde vem por padrão que o CDIR VPC -> CDIR VPC (Qualquer aparelho na VPC pode falar com qualquer aparelho na VPC)
+  
+  ## DHCP: Protocologo de distribuição de IP's
+
+  ## 
+   
+
+
 
