@@ -222,8 +222,101 @@ Placement Strategies
   
   ## DHCP: Protocologo de distribuição de IP's
 
-  ## 
-   
+  ## Netwirk ACL (NACL)
+  * É um firewall statless (não lembra de você, tem que ter autorização de entrada e saida)
+  
+  ## Security Group
+  * Precisa de permissão apenas para entrada, para saida ele já autoriza.
+
+* Uma alternativa para acessar a internet em computadores que não tem acesso são o Jump box e o bastion hosts.
+* 
+
+## Interface VPC Endpoinbt
+* Possibilita fazer um tunel de VPN para conectar na AWS s3 por exemplo, entre outros 200serviços.
+
+## Gateway VPC endpoint
+* POssibilita conectar também em serviços internos, porém apenas para S3 e DynamoDB mas gratuito, com banda ilimitada e redundante
+
+## Gateway Load ballancing
+* Fica exposto para a internet e distribui a carga para as maquinas que são privadas e não tem acesso a internet
+
+## AWS Transit Gateway
+* É um gerenciador central que conecta as VPC's.
+* É um serviço Regional.
+* Gerencia até 5k attachments: Ex: Redes, VPN,
+* Para cronectar dois Transit Gateway de duas regiões é possível utilizar um Transit Gateway Peering
 
 
+## AWS Direct Connect
+* É uma rede dedicata que liga uma AZ a uma empresa.
+* Possível chegar até 100GB
+* Por padrão, os dados são trafegados sem criptografia, porém é possível adicionar uma VPN criptografando.
+* 
 
+## Aula 19/05
+* VPC Peering
+* AWS VPN Sito-to-site
+* AWS Direct Connect
+
+## AWS Cognito
+* Problema: Em um sistema com vários usuários, acaba sendo inviavel fazer essa associação permissão x usuário
+* Para isso, é utilizado o IAM Groups.
+* Grupos só podem ter usuário e permissões.
+* Com o cognito, é possível gerar chaves JWT para sua aplicação realizar authenticação no Cognito
+* 50.000 usuários gratuitos
+
+### AWS Cognito USer Pool
+* Possibilita trocar imagens de login
+* Possibilita Autenticação de 2 fatores
+
+## Role Base
+* Criação de Roles é feita para que um usuário tenha acesso temporário a um determinado serviço.
+* Mesmo após criar a Role e atribuir, a permissão só será aplicado caso o usuário acesse a URL.
+* ARN = Amazon Resource Name
+
+## ABAC - Atribut Basic Access Controll
+* Na police, é utilizado para validação de quem pode utilizar a police ou não pela condition da police
+
+## AWS Organization
+* Permite gerenciar uma hieraquia de contas, possíbilitando ver os valores de todas as contas em um só lugar
+* Possibilita ter mais desconto quanto mais usa.
+* Como fazer:
+1. Escolha uma conta para virar a Root;
+2. A Conta Root, pode disparar uma invite para as demais contas se juntarem a organização.
+3. Ao aceitar, as demais contas ficam dependendo de algumas permissoes da root.
+4. A partir disso, pode ser habilitado 
+* SCP Policy - Politica de governamento na AWS. Limita o que o usuário pode fazer. Ex: Não pode criar instancias s3 no brasil
+  * Grant:  Da permissao
+    * Identidade 
+    * Recurso
+  * Limit: Limita a Permissão 
+    * SCP
+    * Permition Boundary 
+
+# Criptografia
+## Criptografia Simetrica
+* Uma chave criptografa e descriptografa os dados
+
+## Criptografia Assimetrica
+* Uma chave para criptografar outra chave para a chave descriptografar;
+
+## AWS KMS - 
+* Cofre de senhas da AWS que guarda todas as chaves criptografadas;
+
+# AWS WAF
+* É um firewall dinamico que que consegue capturar tipos de ataque como: SQL Injection, Javascript
+* É possível criar regras personalizadas. Como: Todos os usuário fora do Brasil não vão conseguir enviar pacotes.
+
+# AWS Macie
+* É uma ferramante que consegue encontrar dados sensiveis no seu armazenamento. EX: Localizar CPF's em buckets do s3
+
+# AWS Inspector
+* Procura vunerabilidade conhecidas no seu ambiente e lhe avisa.
+* Scanneia: EC2
+
+# AWS Detective
+* Identifica comportamentos estranhos na sua conta.
+
+# AWS Security Hub
+* Painel de controle de segurança geral
+* AWS Macie, Inspector, etc..
