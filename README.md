@@ -254,9 +254,22 @@ Placement Strategies
 * 
 
 ## Aula 19/05
-* VPC Peering
-* AWS VPN Sito-to-site
-* AWS Direct Connect
+## VPC Peering
+* Problema que ele resolve: Necessidade de comunicação privada entre duas VPCs na AWS (mesmo ou diferentes contas/regiões)
+* Permite que instâncias em VPCs diferentes se comuniquem como se estivessem na mesma rede
+* Não suporta transitividade (VPC A ↔ B e B ↔ C não implica A ↔ C)
+* Tráfego é roteado internamente pela rede da AWS, sem uso da internet
+
+## AWS VPN Sito-to-site
+* Problema que ele resolve: Conectar uma rede local (on-premises) a uma VPC na AWS com segurança
+* Usa IPsec para criar túneis criptografados entre os ambientes
+* É necessário um Customer Gateway (CGW) e um Virtual Private Gateway (VGW)
+* Pode ser redundante com dois túneis ativos para alta disponibilidade
+## AWS Direct Connect
+* Problema que ele resolve: Latência e largura de banda limitadas ao usar conexão pela internet
+* Conexão de rede dedicada entre a infraestrutura local e a AWS
+* Mais estável, com menor latência e sem passar pela internet pública
+* Ideal para grandes volumes de dados e necessidades críticas de desempenho
 
 ## AWS Cognito
 * Problema: Em um sistema com vários usuários, acaba sendo inviavel fazer essa associação permissão x usuário
@@ -320,3 +333,75 @@ Placement Strategies
 # AWS Security Hub
 * Painel de controle de segurança geral
 * AWS Macie, Inspector, etc..
+
+
+# Monitoramento
+## Por que Implementar?
+1. Verificar a saúde da operação, se está rodando como deveria
+2. Utilização do Servidor: Verificar se pode diminuir ou se é necessário aumentar o servidor
+3. Performance: Caso o cliente reclame de lentidão, pode ser por conta da aplicação ou servidor, esse monitoramento irá ajudar a descobrir onde está a lentidão
+4. Segurança: Em caso de ataques, é normal o processamento aumentar e com o monitoramento é possível ver isso.
+
+## CloudWatch
+* Monitora LOG - São pagos
+* Monitora Métricas: CPU, Mémoria - AWS fornece gratuito
+* É possível gerar Gráficos;
+* É possível gerar alarmes;
+* Ao ser gerado um log, por padrão, ele cria para nunca excluir. Alterar para apagar de x em x tempo
+
+## Event Bridge
+* Monitoramento da AWS em tempo real.
+* Event Bus: Eventos da que a AWS Gera e a aplicação pode consumir o evento
+
+# Amazon EC2
+* Agendamento de Ações.
+  Exemplo: Subir servidores com base no agendamento
+* Predictive policy: É uma IA que vai gerenciar os EC2 e verifica quando precisa subir mais ou não.
+
+# Load Balance
+* Problema: Distribuição desigual de tráfego entre instâncias pode causar sobrecarga e falhas
+* Para isso, é utilizado o Elastic Load Balancer (ELB)
+* Distribui automaticamente o tráfego entre múltiplas instâncias em uma ou mais zonas de disponibilidade
+* Existem três tipos principais: Application (HTTP/HTTPS), Network (TCP/UDP), e Gateway (para tráfego IP)
+* Suporte a health checks para garantir que apenas instâncias saudáveis recebam tráfego
+
+# DNS
+* Problema: Dificuldade de lembrar e gerenciar endereços IP de servidores e serviços
+* Para isso, é utilizado o serviço de DNS (como o Amazon Route 53)
+* Converte nomes de domínio (ex: www.exemplo.com) em endereços IP
+* Suporte a balanceamento de carga com registros do tipo "Alias" * integrados a ELB, S3, e outros
+* Pode ser usado para failover, roteamento baseado em geolocalização e * latência
+* Amazon Route 53: serviço de DNS gerenciado da AWS que também oferece * registro de domínios e checagens de saúde; altamente disponível e * escalável
+
+# CloudFormation utilizando yaml
+* Problema: Criar e gerenciar recursos AWS manualmente é demorado e propenso a erros
+* Para isso, é utilizado o AWS CloudFormation com arquivos de template o (template.yaml)
+  * O template.yaml define a infraestrutura como código (IaC) — descreve recursos como funções Lambda, APIs, bancos de dados, etc.
+* Escrita no formato YAML (ou JSON), com seções como:
+  * AWSTemplateFormatVersion: versão do template
+  * Resources: onde os recursos são definidos (ex: S3, Lambda, DynamoDB)
+  * Parameters: permite passar valores externos para o template
+  * Outputs: retorna informações úteis ao final da criação (ex: ARN de um recurso)
+* Usado com ferramentas como o AWS SAM (Serverless Application Model), que facilita o deploy de aplicações serverless
+* Exemplo de uso com sam deploy, que converte o template em uma stack no CloudFormation e cria os recursos definidos
+
+# Arquitetura desacoplada
+* Problema: Normalmente as aplicações só tem uma camada, onde se cair o banco de dados, já interrompe toda a aplicação.
+* Como resolver: 
+1. Podemos utilizar Aplication LoadBalancer(HTTP) para controlar as requisições e direcionar para Intancias disponiveis.
+2. Utilizar Network Loadbalance para controlar as requisições ao banco de dados. (TCP/UDP)
+3. Quebrando a aplicação em módulos e migrar para microserviços
+4. Utilizar SQS e SNS para implementação de filas nas requisições.
+
+# Amazon SQS (Simple Queue Service)
+* Problema: Sistemas desacoplados precisam se comunicar de forma assíncrona e confiável
+* Serviço de fila gerenciado que armazena mensagens até que sejam processadas por outro serviço
+* Garante que mensagens não sejam perdidas, mesmo se o consumidor estiver temporariamente offline
+* Pode ser padrão (alta taxa de throughput, entrega eventual) ou FIFO (ordem garantida e sem duplicidade)
+* Exemplo: uma aplicação envia pedidos para a fila, e um worker processa essas mensagens em segundo plano
+
+# Amazon SNS(Simple Notification Service)
+* Problema: Notificar múltiplos sistemas ou usuários de forma rápida e * escalável
+* Serviço de publicação/assinatura (pub/sub) para envio de mensagens a * múltiplos destinos
+* Destinos podem ser: email, SMS, Lambda, SQS, ou HTTP endpoints
+* Baixa latência e altamente escalável
